@@ -51,7 +51,17 @@
             strongSelf.distanceA.text = @"?";
         }
         
-      
+        if ([NSNull null] != response[1]) {
+            strongSelf.distanceB.text = [NSString stringWithFormat: @"%.2f km", [response[1] floatValue]];
+        } else {
+            strongSelf.distanceB.text = @"?";
+        }
+        
+        if ([NSNull null] != response[2]) {
+            strongSelf.distanceC.text = [NSString stringWithFormat: @"%.2f km", [response[2] floatValue]];
+        } else {
+            strongSelf.distanceC.text = @"?";
+        }
         strongSelf.calculateButton.enabled = YES;
         strongSelf.req = nil;
     };
