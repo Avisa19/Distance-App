@@ -1,0 +1,6 @@
+framework module Pods_Distance_App {
+  umbrella header "Pods-Distance-App-umbrella.h"
+
+  export *
+  module * { export * }
+}
