@@ -27,7 +27,9 @@
     
   self.calculateButton.enabled = NO;
     
+    // Allocate Memory heap
     self.req = [DGDistanceRequest alloc];
+    
     NSString *start = self.startLoaction.text;
     NSString *destA = self.distanceA.text;
     NSString *destB = self.distanceB.text;
@@ -35,16 +37,26 @@
     NSArray *dests = @[destA, destB, destC];
     
     __weak ViewController *weakSelf = self;
-    
+    // Initialze it
     self.req = [self.req initWithLocationDescriptions:dests sourceDescription:start];
+    // Create a callback
     self.req.callback = ^(NSArray *response) {
         
         ViewController *strongSelf = weakSelf;
-        strongSelf.distanceC.text = @"CallBack";
+        if (!strongSelf) return;
+        
+        if ([NSNull null] != response[0]) {
+            strongSelf.distanceA.text = [NSString stringWithFormat: @"%.2f km", [response[0] floatValue]];
+        } else {
+            strongSelf.distanceA.text = @"?";
+        }
+        
+      
         strongSelf.calculateButton.enabled = YES;
         strongSelf.req = nil;
     };
     
+    // Activate it
     [self.req start];
 }
 
