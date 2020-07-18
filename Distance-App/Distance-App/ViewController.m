@@ -25,7 +25,27 @@
 @implementation ViewController
 - (IBAction)calculateButtonTapped:(id)sender {
     
-  
+  self.calculateButton.enabled = NO;
+    
+    self.req = [DGDistanceRequest alloc];
+    NSString *start = self.startLoaction.text;
+    NSString *destA = self.distanceA.text;
+    NSString *destB = self.distanceB.text;
+    NSString *destC = self.distanceC.text;
+    NSArray *dests = @[destA, destB, destC];
+    
+    __weak ViewController *weakSelf = self;
+    
+    self.req = [self.req initWithLocationDescriptions:dests sourceDescription:start];
+    self.req.callback = ^(NSArray *response) {
+        
+        ViewController *strongSelf = weakSelf;
+        strongSelf.distanceC.text = @"CallBack";
+        strongSelf.calculateButton.enabled = YES;
+        strongSelf.req = nil;
+    };
+    
+    [self.req start];
 }
 
 @end
